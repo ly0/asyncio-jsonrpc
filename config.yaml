@@ -1,0 +1,8 @@
+# server settings
+rpc_port: 10080
+
+# rpc settings
+company: dmall
+service: ams
+threadpool_size: 100
+processpool_size: 10

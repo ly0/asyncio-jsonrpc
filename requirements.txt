@@ -1,0 +1,3 @@
+pycurl
+pyyaml
+git+git://github.com/dmall/jsonrpclib-py3.git
