@@ -4,7 +4,6 @@ from aiohttp import web
 from asynciorpc.handler import Handler
 from asynciorpc.config import CONFIG, INTERFACES
 from asynciorpc.application import get_application
-from asynciorpc.wsgi import application as wsgi_app
 
 async def rpc_handler(request):
     handler_obj = Handler()
