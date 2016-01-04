@@ -1,3 +1,4 @@
 pycurl
 pyyaml
+aiohttp
 git+git://github.com/dmall/jsonrpclib-py3.git
