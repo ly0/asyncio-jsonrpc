@@ -75,6 +75,26 @@ register(a.test2, 'TestApi2') # http://127.0.0.1:10080/github.user.TestApi2
 run()
 ```
 
+### Work with Gunicorn
+**Example**
+In your `server.py`  
+
+```python
+from asynciorpc.runner import run
+
+REGISTER_YOUR_API
+
+app = run(wsgi=True)
+```
+
+And run *gunicorn*
+
+```bash
+gunicorn server:app --bind localhost:8080 --worker-class aiohttp.worker.GunicornWebWorker
+```
+
+Ref: http://aiohttp.readthedocs.org/en/stable/gunicorn.html
+
 ## Attention
 `handler` must return python builtin types, such as `int`, `float`, `str`, `dict`, `list`, others like `datetime.datetime`
 are not supported, JSON serialization exceptions will be raised.

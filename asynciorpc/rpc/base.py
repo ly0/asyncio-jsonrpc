@@ -168,8 +168,8 @@ class BaseRPCParser(object):
             if not auth_header.startswith('Basic '):
                 return _request_auth(self.handler)
 
-            auth_decoded = base64.decodebytes(auth_header[6:])
-            username, password = auth_decoded.split(':', 2)
+            auth_decoded = base64.decodebytes(auth_header.encode()[6:])
+            username, password = auth_decoded.decode().split(':', 2)
 
             if not auth_func(username, password):
                 return _request_auth(self.handler)

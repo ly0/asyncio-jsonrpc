@@ -1,14 +1,22 @@
 import argparse
 import asyncio
+from aiohttp import web
 from asynciorpc.handler import Handler
 from asynciorpc.config import CONFIG, INTERFACES
-from aiohttp import web
+from asynciorpc.application import get_application
+from asynciorpc.wsgi import application as wsgi_app
+from aiohttp_wsgi import WSGIHandler
 
 async def rpc_handler(request):
     handler_obj = Handler()
     return await handler_obj.post(request)
 
-def run():
+def run(*, wsgi=False):
+    app = get_application()
+
+    if wsgi:
+        return app
+
     service_name = '%s.%s' % (CONFIG['company'], CONFIG['service'])
     current_interfaces = ['    %s.%s' % (service_name, x) for x in INTERFACES.keys()]
     parser = argparse.ArgumentParser(
@@ -30,8 +38,6 @@ Current registered interfaces
     args = parser.parse_args()
 
     loop = asyncio.get_event_loop()
-    app = web.Application()
-    app.router.add_route('POST', '/', rpc_handler)
     handler = app.make_handler()
     f = loop.create_server(handler, '0.0.0.0', args.port)
     srv = loop.run_until_complete(f)
